@@ -43,7 +43,7 @@ void OnInitializePlugin()
 		{
 			printf("Windowed mode on\n");
 			Nop(0x575680, 33); // before the hook, to disable the other code stuff
-			InjectHook(0x57567C, CreateCustomWindow, PATCH_CALL); // windowed mode / custom window
+			InjectHook(0x57567C, CreateCustomWindow, HookType::Call); // windowed mode / custom window
 
 			// windowMode = SW_SHOWNORMAL
 			Patch<char>(0x5FE99F + 1, 1);
@@ -109,24 +109,24 @@ void OnInitializePlugin()
 		Nop(0x5ecc3b, 6);
 		Nop(0x5ed472, 6);
 
-		InjectHook(0x5ecc3b, HooksClass::PS2_Glow_SFX_Settings_Patch, PATCH_JUMP);
+		InjectHook(0x5ecc3b, HooksClass::PS2_Glow_SFX_Settings_Patch, HookType::Jump);
 	}
 
 	// HOOKS
 	
 	// Potentially causing garage crashes for some people
-	//InjectHook(0x465721, HooksClass::Before_OnEnterGarageState, PATCH_JUMP);
+	//InjectHook(0x465721, HooksClass::Before_OnEnterGarageState, HookType::Jump);
 
 	//Nop(0x465e30, 7);
-	//InjectHook(0x465e30, HooksClass::After_OnEnterGarageState, PATCH_JUMP);
+	//InjectHook(0x465e30, HooksClass::After_OnEnterGarageState, HookType::Jump);
 
 	Nop(0x4c4cb9, 9);
-	InjectHook(0x4c4cb9, HooksClass::ProcessCommandExtension_Frontend, PATCH_JUMP);
+	InjectHook(0x4c4cb9, HooksClass::ProcessCommandExtension_Frontend, HookType::Jump);
 
 	Nop(0x45acc4, 7);
-	InjectHook(0x45acc4, &HooksClass::GameSimulationStep, PATCH_JUMP);
+	InjectHook(0x45acc4, &HooksClass::GameSimulationStep, HookType::Jump);
 	Nop(0x4def78, 6);
-	InjectHook(0x4def78, &HooksClass::SimulationDraw, PATCH_JUMP);
+	InjectHook(0x4def78, &HooksClass::SimulationDraw, HookType::Jump);
 
 	// this will fix some crashes when going on Era change or back to the menu
 	if (SettingsMgr->bHeapFree_Validation_Fix)
@@ -134,33 +134,33 @@ void OnInitializePlugin()
 		WriteAt(0x5fc7e6 + 1, "\x09", 1);
 		Nop(0x5fc7e3, 3);
 		Nop(0x5fc7f1, 9);
-		InjectHook(0x5fc7f1, HooksClass::HeapFree_Fix_Validation, PATCH_JUMP);
+		InjectHook(0x5fc7f1, HooksClass::HeapFree_Fix_Validation, HookType::Jump);
 	}
 
 	// likely unused by the game
-	//InjectHook(0x4a80c9, &CState_Frontend::OnEnterState, PATCH_CALL);
+	//InjectHook(0x4a80c9, &CState_Frontend::OnEnterState, HookType::Call);
 
 	if (SettingsMgr->bLoad_Frontend_Dev_Menu)
 	{
 		Nop(0x4aa075, 6);
-		InjectHook(0x4aa075, &HooksClass::Custom_Load_Dev_Menu, PATCH_JUMP);
+		InjectHook(0x4aa075, &HooksClass::Custom_Load_Dev_Menu, HookType::Jump);
 	}
 
 	if (SettingsMgr->bClassic_BurnOut)
 	{
 		Nop(0x5AF86C, 5);
-		InjectHook(0x5AF86C, &HooksClass::Classic_BurnOut_Hook, PATCH_JUMP);
+		InjectHook(0x5AF86C, &HooksClass::Classic_BurnOut_Hook, HookType::Jump);
 	}
 
 	if (SettingsMgr->bPlayer_Can_Use_Turn_Signal)
 	{
 		Nop(0x49f986, 6);
-		InjectHook(0x49f986, &HooksClass::Turn_Signal_Feature, PATCH_JUMP);
+		InjectHook(0x49f986, &HooksClass::Turn_Signal_Feature, HookType::Jump);
 	}
 
 	// HRESULT __fastcall EndScene__i4HRESULT(CViewport *viewport)
 	//Nop(0x5e455b, 15); // nop all except 'ret' (return)
-	//InjectHook(0x5e455b, &HooksClass::D3DDevice_EndScene_Patches, PATCH_JUMP); // re-direct the function to ours, like a thunk function
+	//InjectHook(0x5e455b, &HooksClass::D3DDevice_EndScene_Patches, HookType::Jump); // re-direct the function to ours, like a thunk function
 
 	//InjectHook(0x4b7f36, HooksClass::GameOverlays_DrawHooked_Debug);
 
@@ -185,9 +185,9 @@ void OnInitializePlugin()
 		
 		// Prevent the player icon into becoming one of them
 		Nop(0x4bdf47, 6);
-		InjectHook(0x4bdf47, HooksClass::OnCase_EMapItem_Player_CustomBlock, PATCH_JUMP);
+		InjectHook(0x4bdf47, HooksClass::OnCase_EMapItem_Player_CustomBlock, HookType::Jump);
 		Nop(0x4bdf92, 11);
-		InjectHook(0x4bdf92, HooksClass::DrawMapItem_ModelCheck, PATCH_JUMP);
+		InjectHook(0x4bdf92, HooksClass::DrawMapItem_ModelCheck, HookType::Jump);
 	}
 
 	printf("DPLFusionFix is initialized\n");

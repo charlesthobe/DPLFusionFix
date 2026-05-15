@@ -32,8 +32,8 @@ void __declspec(naked) HooksClass::Before_OnEnterGarageState()
 	// Low the ping in and ping out radius to prevent infinite loading
 	lfs->m_fPingInRadius = 100;
 	lfs->m_fPingOutRadius = 115;
-	*(float*)(0x6414f8) = lfs->m_fPingInRadius;
-	*(float*)(0x641420) = lfs->m_fPingOutRadius;
+	Memory::Patch<float>(0x6414f8, lfs->m_fPingInRadius);
+	Memory::Patch<float>(0x641420, lfs->m_fPingOutRadius);
 
 	// Restore registers
 	__asm
@@ -95,8 +95,8 @@ void __declspec(naked) HooksClass::After_OnEnterGarageState()
 	// Restore ping in and ping out radius
 	lfs->m_fPingInRadius = SettingsMgr->fInstances_Spawn_Radius - 10;
 	lfs->m_fPingOutRadius = SettingsMgr->fInstances_Spawn_Radius;
-	*(float*)(0x6414f8) = lfs->m_fPingInRadius;
-	*(float*)(0x641420) = lfs->m_fPingOutRadius;
+	Memory::Patch<float>(0x6414f8, lfs->m_fPingInRadius);
+	Memory::Patch<float>(0x641420, lfs->m_fPingOutRadius);
 
 	// Restore registers
 	__asm
@@ -617,8 +617,8 @@ void __declspec(naked) HooksClass::PS2_Glow_SFX_Settings_Patch()
 	*/
 
 	// Code here
-	*(int*)(0x976398) = 300; // "Glow pp multiply"
-	*(int*)(0x9765A4) = 3;   // "Glow filter pass count"
+	Memory::Patch<int>(0x976398, 300); // "Glow pp multiply"
+	Memory::Patch<int>(0x9765A4, 3);   // "Glow filter pass count"
 
 	/*
 	static int DAT_00976398 = 0x976398;

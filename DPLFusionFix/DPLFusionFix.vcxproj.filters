@@ -33,9 +33,6 @@
     <ClInclude Include="pch.h">
       <Filter>Header files</Filter>
     </ClInclude>
-    <ClInclude Include="utils.h">
-      <Filter>External</Filter>
-    </ClInclude>
     <ClInclude Include="utils\MemoryMgr.h">
       <Filter>External\utils</Filter>
     </ClInclude>
@@ -421,9 +418,6 @@
     </ClCompile>
     <ClCompile Include="dpl\MenuManager.cpp">
       <Filter>dpl</Filter>
-    </ClCompile>
-    <ClCompile Include="utils.cpp">
-      <Filter>External</Filter>
     </ClCompile>
     <ClCompile Include="dpl\HACK_VehicleTypeSelection.cpp">
       <Filter>dpl</Filter>

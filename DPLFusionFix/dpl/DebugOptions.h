@@ -1,5 +1,5 @@
 #pragma once
-#include "..\utils.h"
+#include "../utils/MemoryMgr.h"
 
 extern bool bDebug_ShowVersion;
 extern bool bDebug_ShowFPS;

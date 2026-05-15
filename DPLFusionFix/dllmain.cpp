@@ -21,15 +21,15 @@ void OnInitializePlugin()
 	if (SettingsMgr != NULL)
 	{
 		// ping in & ping out radius
-		*(float*)(0x6414f8) = SettingsMgr->fInstances_Spawn_Radius - INSTANCES_SPAWN_RADIUS_PING_IN_OFFSET;
-		*(float*)(0x641420) = SettingsMgr->fInstances_Spawn_Radius;
+		Patch(0x6414f8, SettingsMgr->fInstances_Spawn_Radius - INSTANCES_SPAWN_RADIUS_PING_IN_OFFSET);
+		Patch(0x641420, SettingsMgr->fInstances_Spawn_Radius);
 
-		*(float*)(0x6dd660) = SettingsMgr->fVehicles_HeadLight_DegreesAngle;
+		Patch(0x6dd660, SettingsMgr->fVehicles_HeadLight_DegreesAngle);
 
 		// float _11SDrawHelper$m_draw_distance[3]
-		*(float*)(0x6cfcb4) = SettingsMgr->fDraw_Distance1;
-		*(float*)(0x6cfcb4 + 4) = SettingsMgr->fDraw_Distance2;
-		*(float*)(0x6cfcb4 + 8) = SettingsMgr->fDraw_Distance3;
+		Patch(0x6cfcb4, SettingsMgr->fDraw_Distance1);
+		Patch(0x6cfcb4 + 4, SettingsMgr->fDraw_Distance2);
+		Patch(0x6cfcb4 + 8, SettingsMgr->fDraw_Distance3);
 
 		// show console if the settings allow
 		if (SettingsMgr->bShow_Console_Output)
@@ -46,11 +46,11 @@ void OnInitializePlugin()
 			InjectHook(0x57567C, CreateCustomWindow, HookType::Call); // windowed mode / custom window
 
 			// windowMode = SW_SHOWNORMAL
-			Patch<char>(0x5FE99F + 1, 1);
+			Patch<uint8_t>(0x5FE99F + 1, 1);
 
 			if (SettingsMgr->bPause_Game_In_Windowed_Mode == false)
 			{
-				WriteAt(0x57168B + 3, "\x00", 1); // all thanks to my ol' helper - Cheat Engine!
+				Patch<uint8_t>(0x57168B + 3, 0x00); // all thanks to my ol' helper - Cheat Engine!
 			}
 		}
 
@@ -67,20 +67,20 @@ void OnInitializePlugin()
 
 
 	// Default patches
-	WritePointerAt(0x442b4c + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensityBaseNoPingInRadius));
-	WritePointerAt(0x442b44 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensityPingMultiplier));
-	WritePointerAt(0x4485f5 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensitySubtractionNoPingInRadius));
-	WritePointerAt(0x448346 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedPingOut));
-	WritePointerAt(0x448356 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedPingIn));
-	WritePointerAt(0x404275 + 3, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fAICivilianCarGiveUpJourneySquareDistance));
+	Patch(0x442b4c + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensityBaseNoPingInRadius));
+	Patch(0x442b44 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensityPingMultiplier));
+	Patch(0x4485f5 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensitySubtractionNoPingInRadius));
+	Patch(0x448346 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedPingOut));
+	Patch(0x448356 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedPingIn));
+	Patch(0x404275 + 3, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fAICivilianCarGiveUpJourneySquareDistance));
 
 	if (SettingsMgr->bHighPoly_Civilian_Cars)
 	{
 		// civilian cars' rendering priority is set to 0x5 (eVehiclePriorityForeground or eVehicleControlScripted)
-		WriteAt(0x40d64c + 1, "\x05", 1); // PARKED CARS - AIVehicleClass::vehicleSetRenderingPriority(..., eVehiclePriorityForeground);
-		WriteAt(0x4107dd + 1, "\x05", 1); // VIRTUAL PING IN - AIVehicleClass::vehicleSetRenderingPriority(..., eVehiclePriorityForeground);
-		WriteAt(0x410b0f + 1, "\x05", 1); // ??? - AIVehicleClass::vehicleSetRenderingPriority(..., eVehiclePriorityForeground);
-		WriteAt(0x412b1e + 1, "\x05", 1); // AIManagerClass step - AIVehicleClass::vehicleSetRenderingPriority(..., eVehiclePriorityForeground);
+		Patch<uint8_t>(0x40d64c + 1, 0x05); // PARKED CARS - AIVehicleClass::vehicleSetRenderingPriority(..., eVehiclePriorityForeground);
+		Patch<uint8_t>(0x4107dd + 1, 0x05); // VIRTUAL PING IN - AIVehicleClass::vehicleSetRenderingPriority(..., eVehiclePriorityForeground);
+		Patch<uint8_t>(0x410b0f + 1, 0x05); // ??? - AIVehicleClass::vehicleSetRenderingPriority(..., eVehiclePriorityForeground);
+		Patch<uint8_t>(0x412b1e + 1, 0x05); // AIManagerClass step - AIVehicleClass::vehicleSetRenderingPriority(..., eVehiclePriorityForeground);
 	}
 
 	// TODO: maybe fix this... it's for the complete mission debug option
@@ -99,9 +99,9 @@ void OnInitializePlugin()
 	//WritePointerAt(0x471f54 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fInstances_Ping_In));
 	//WritePointerAt(0x471f61 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fInstances_Ping_Out));
 
-	*(float*)(0x6778e0) = GameChangableSettings::g_fAICivilianCarTopSpeedForward;
-	*(float*)(0x6778dc) = GameChangableSettings::g_fAICivilianCarTopSpeedReverse;
-	*(float*)(0x6778d8) = GameChangableSettings::g_fAICivilianCarGainGrad;
+	Patch(0x6778e0, GameChangableSettings::g_fAICivilianCarTopSpeedForward);
+	Patch(0x6778dc, GameChangableSettings::g_fAICivilianCarTopSpeedReverse);
+	Patch(0x6778d8, GameChangableSettings::g_fAICivilianCarGainGrad);
 
 	if (SettingsMgr->bPS2_Glow_Effects_Settings)
 	{
@@ -131,7 +131,7 @@ void OnInitializePlugin()
 	// this will fix some crashes when going on Era change or back to the menu
 	if (SettingsMgr->bHeapFree_Validation_Fix)
 	{
-		WriteAt(0x5fc7e6 + 1, "\x09", 1);
+		Patch<uint8_t>(0x5fc7e6 + 1, 0x09);
 		Nop(0x5fc7e3, 3);
 		Nop(0x5fc7f1, 9);
 		InjectHook(0x5fc7f1, HooksClass::HeapFree_Fix_Validation, HookType::Jump);
@@ -169,19 +169,19 @@ void OnInitializePlugin()
 
 	if (SettingsMgr->bDev_Menu_On)
 	{
-		WriteAt(0x459f8e + 1, "\x01", 1); // pause_devMenuBTN->SetRenderState(1);
+		Patch<uint8_t>(0x459f8e + 1, 0x01); // pause_devMenuBTN->SetRenderState(1);
 		
 		// NOTE: for your safety you better not access frontend dev menu!
 		// it will crash the game, so stick to the pause menu dev menu :/
-		WriteAt(0x4aa522 + 1, "\x01", 1); // frontend_devMenuBTN->SetRenderState(1);
-	
+		Patch<uint8_t>(0x4aa522 + 1, 0x01); // frontend_devMenuBTN->SetRenderState(1);
+
 		//Nop(0x4aa3f2, 9); // disable launch_dev_menu
 		//Nop(0x459f8c, 14);
 	}
 	if (SettingsMgr->bMinimap_Driver3_Goons)
 	{
-		WriteAt(0x4bdf71 + 3, "\x4C", 1); // ambColour.Y = 0;
-		//WriteAt(0x4bdf92 + 7, "\x05\x00\x35", 4); // instance.hModel = MinimapIcon_AlertedCop;
+		Patch<uint8_t>(0x4bdf71 + 3, 0x4C); // ambColour.Y = 0;
+		//Patch(0x4bdf92 + 7, {0x05, 0x00, 0x35, 0x00}); // instance.hModel = MinimapIcon_AlertedCop;
 		
 		// Prevent the player icon into becoming one of them
 		Nop(0x4bdf47, 6);

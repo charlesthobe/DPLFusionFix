@@ -22,11 +22,11 @@ void Update_Debug_DisableLoadingScreen()
 {
 	if (bDebug_DisableLoadingScreen)
 	{
-		WriteAt(0x4a76ef, "\xC2\x04\x00", 3);
+		Patch(0x4a76ef, {0xC2, 0x04, 0x00});
 	}
 	else
 	{
-		WriteAt(0x4a76ef, "\x56\x8B\xF1", 3);
+		Patch(0x4a76ef, {0x56, 0x8B, 0xF1});
 	}
 }
 
@@ -39,28 +39,28 @@ void Update_Debug_InvincibleToWater()
 	}
 	else
 	{
-		WriteAt(0x4A268D, "\x0F\x84\x12\x01\x00\x00", 6);
+		Patch(0x4A268D, {0x0F, 0x84, 0x12, 0x01, 0x00, 0x00});
 	}
 }
 
 void Set_Debug_Cop2006InitWep(char newOne)
 {
-	WriteAt(0x430046 + 0x1, &newOne, 1);
+	Patch(0x430046 + 0x1, newOne);
 }
 
 void Set_Debug_Cop1978InitWep(char newOne)
 {
-	WriteAt(0x43004a + 0x1, &newOne, 1);
+	Patch(0x43004a + 0x1, newOne);
 }
 
 void Update_Debug_NoCollisions()
 {
 	if (bDebug_NoCollisions)
 	{
-		WriteAt(0x5ccd9d, "\xc3", 1);
+		Patch<char>(0x5ccd9d, 0xc3);
 	}
 	else
 	{
-		WriteAt(0x5ccd9d, "\x55", 1);
+		Patch<char>(0x5ccd9d, 0x55);
 	}
 }

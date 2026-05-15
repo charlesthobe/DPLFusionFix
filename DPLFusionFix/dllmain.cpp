@@ -21,15 +21,15 @@ void OnInitializePlugin()
 	if (SettingsMgr != NULL)
 	{
 		// ping in & ping out radius
-		*(float*)(0x6414f8) = SettingsMgr->fInstances_Spawn_Radius - INSTANCES_SPAWN_RADIUS_PING_IN_OFFSET;
-		*(float*)(0x641420) = SettingsMgr->fInstances_Spawn_Radius;
+		WriteAt(0x6414f8, SettingsMgr->fInstances_Spawn_Radius - INSTANCES_SPAWN_RADIUS_PING_IN_OFFSET);
+		WriteAt(0x641420, SettingsMgr->fInstances_Spawn_Radius);
 
-		*(float*)(0x6dd660) = SettingsMgr->fVehicles_HeadLight_DegreesAngle;
+		WriteAt(0x6dd660, SettingsMgr->fVehicles_HeadLight_DegreesAngle);
 
 		// float _11SDrawHelper$m_draw_distance[3]
-		*(float*)(0x6cfcb4) = SettingsMgr->fDraw_Distance1;
-		*(float*)(0x6cfcb4 + 4) = SettingsMgr->fDraw_Distance2;
-		*(float*)(0x6cfcb4 + 8) = SettingsMgr->fDraw_Distance3;
+		WriteAt(0x6cfcb4, SettingsMgr->fDraw_Distance1);
+		WriteAt(0x6cfcb4 + 4, SettingsMgr->fDraw_Distance2);
+		WriteAt(0x6cfcb4 + 8, SettingsMgr->fDraw_Distance3);
 
 		// show console if the settings allow
 		if (SettingsMgr->bShow_Console_Output)
@@ -67,12 +67,12 @@ void OnInitializePlugin()
 
 
 	// Default patches
-	WritePointerAt(0x442b4c + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensityBaseNoPingInRadius));
-	WritePointerAt(0x442b44 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensityPingMultiplier));
-	WritePointerAt(0x4485f5 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensitySubtractionNoPingInRadius));
-	WritePointerAt(0x448346 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedPingOut));
-	WritePointerAt(0x448356 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedPingIn));
-	WritePointerAt(0x404275 + 3, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fAICivilianCarGiveUpJourneySquareDistance));
+	WriteAt(0x442b4c + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensityBaseNoPingInRadius));
+	WriteAt(0x442b44 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensityPingMultiplier));
+	WriteAt(0x4485f5 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedDensitySubtractionNoPingInRadius));
+	WriteAt(0x448346 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedPingOut));
+	WriteAt(0x448356 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fPedPingIn));
+	WriteAt(0x404275 + 3, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fAICivilianCarGiveUpJourneySquareDistance));
 
 	if (SettingsMgr->bHighPoly_Civilian_Cars)
 	{
@@ -99,9 +99,9 @@ void OnInitializePlugin()
 	//WritePointerAt(0x471f54 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fInstances_Ping_In));
 	//WritePointerAt(0x471f61 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fInstances_Ping_Out));
 
-	*(float*)(0x6778e0) = GameChangableSettings::g_fAICivilianCarTopSpeedForward;
-	*(float*)(0x6778dc) = GameChangableSettings::g_fAICivilianCarTopSpeedReverse;
-	*(float*)(0x6778d8) = GameChangableSettings::g_fAICivilianCarGainGrad;
+	WriteAt(0x6778e0, GameChangableSettings::g_fAICivilianCarTopSpeedForward);
+	WriteAt(0x6778dc, GameChangableSettings::g_fAICivilianCarTopSpeedReverse);
+	WriteAt(0x6778d8, GameChangableSettings::g_fAICivilianCarGainGrad);
 
 	if (SettingsMgr->bPS2_Glow_Effects_Settings)
 	{
@@ -169,19 +169,19 @@ void OnInitializePlugin()
 
 	if (SettingsMgr->bDev_Menu_On)
 	{
-		WriteAt(0x459f8e + 1, "\x01", 1); // pause_devMenuBTN->SetRenderState(1);
+		Patch<char>(0x459f8e + 1, 0x01); // pause_devMenuBTN->SetRenderState(1);
 		
 		// NOTE: for your safety you better not access frontend dev menu!
 		// it will crash the game, so stick to the pause menu dev menu :/
-		WriteAt(0x4aa522 + 1, "\x01", 1); // frontend_devMenuBTN->SetRenderState(1);
-	
+		Patch<char>(0x4aa522 + 1, 0x01); // frontend_devMenuBTN->SetRenderState(1);
+
 		//Nop(0x4aa3f2, 9); // disable launch_dev_menu
 		//Nop(0x459f8c, 14);
 	}
 	if (SettingsMgr->bMinimap_Driver3_Goons)
 	{
-		WriteAt(0x4bdf71 + 3, "\x4C", 1); // ambColour.Y = 0;
-		//WriteAt(0x4bdf92 + 7, "\x05\x00\x35", 4); // instance.hModel = MinimapIcon_AlertedCop;
+		Patch<char>(0x4bdf71 + 3, 0x4C); // ambColour.Y = 0;
+		//Patch(0x4bdf92 + 7, {0x05, 0x00, 0x35, 0x00}); // instance.hModel = MinimapIcon_AlertedCop;
 		
 		// Prevent the player icon into becoming one of them
 		Nop(0x4bdf47, 6);

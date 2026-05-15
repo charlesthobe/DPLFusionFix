@@ -422,9 +422,6 @@
     <ClCompile Include="dpl\MenuManager.cpp">
       <Filter>dpl</Filter>
     </ClCompile>
-    <ClCompile Include="utils.cpp">
-      <Filter>External</Filter>
-    </ClCompile>
     <ClCompile Include="dpl\HACK_VehicleTypeSelection.cpp">
       <Filter>dpl</Filter>
     </ClCompile>

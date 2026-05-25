@@ -45,12 +45,12 @@ void Update_Debug_InvincibleToWater()
 
 void Set_Debug_Cop2006InitWep(char newOne)
 {
-	Patch(0x430046 + 0x1, newOne);
+	Patch<char>(0x430046 + 0x1, newOne);
 }
 
 void Set_Debug_Cop1978InitWep(char newOne)
 {
-	Patch(0x43004a + 0x1, newOne);
+	Patch<char>(0x43004a + 0x1, newOne);
 }
 
 void Update_Debug_NoCollisions()

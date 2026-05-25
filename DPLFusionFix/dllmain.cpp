@@ -21,15 +21,15 @@ void OnInitializePlugin()
 	if (SettingsMgr != NULL)
 	{
 		// ping in & ping out radius
-		Patch(0x6414f8, SettingsMgr->fInstances_Spawn_Radius - INSTANCES_SPAWN_RADIUS_PING_IN_OFFSET);
-		Patch(0x641420, SettingsMgr->fInstances_Spawn_Radius);
+		Patch<float>(0x6414f8, SettingsMgr->fInstances_Spawn_Radius - INSTANCES_SPAWN_RADIUS_PING_IN_OFFSET);
+		Patch<float>(0x641420, SettingsMgr->fInstances_Spawn_Radius);
 
-		Patch(0x6dd660, SettingsMgr->fVehicles_HeadLight_DegreesAngle);
+		Patch<float>(0x6dd660, SettingsMgr->fVehicles_HeadLight_DegreesAngle);
 
 		// float _11SDrawHelper$m_draw_distance[3]
-		Patch(0x6cfcb4, SettingsMgr->fDraw_Distance1);
-		Patch(0x6cfcb4 + 4, SettingsMgr->fDraw_Distance2);
-		Patch(0x6cfcb4 + 8, SettingsMgr->fDraw_Distance3);
+		Patch<float>(0x6cfcb4, SettingsMgr->fDraw_Distance1);
+		Patch<float>(0x6cfcb4 + 4, SettingsMgr->fDraw_Distance2);
+		Patch<float>(0x6cfcb4 + 8, SettingsMgr->fDraw_Distance3);
 
 		// show console if the settings allow
 		if (SettingsMgr->bShow_Console_Output)
@@ -99,9 +99,9 @@ void OnInitializePlugin()
 	//WritePointerAt(0x471f54 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fInstances_Ping_In));
 	//WritePointerAt(0x471f61 + 4, reinterpret_cast<uintptr_t>(&GameChangableSettings::g_fInstances_Ping_Out));
 
-	Patch(0x6778e0, GameChangableSettings::g_fAICivilianCarTopSpeedForward);
-	Patch(0x6778dc, GameChangableSettings::g_fAICivilianCarTopSpeedReverse);
-	Patch(0x6778d8, GameChangableSettings::g_fAICivilianCarGainGrad);
+	Patch<float>(0x6778e0, GameChangableSettings::g_fAICivilianCarTopSpeedForward);
+	Patch<float>(0x6778dc, GameChangableSettings::g_fAICivilianCarTopSpeedReverse);
+	Patch<float>(0x6778d8, GameChangableSettings::g_fAICivilianCarGainGrad);
 
 	if (SettingsMgr->bPS2_Glow_Effects_Settings)
 	{

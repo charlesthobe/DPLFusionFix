@@ -1,4 +1,5 @@
 #include "HooksClass.h"
+#include "utils.h"
 
 bool D3DDevice_WireFrame_On = false;
 

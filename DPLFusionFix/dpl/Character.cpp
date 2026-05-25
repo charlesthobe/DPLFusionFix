@@ -275,9 +275,9 @@ CWeapon* CCharacter::GetWeapon()
 	return (CWeapon*)((int)this + 208);
 }
 
-int CCharacter::GetPointer() 
+uintptr_t CCharacter::GetPointer() 
 {
-	return (int)(this);
+	return (uintptr_t)(this);
 }
 
 int CCharacter::GetVTableAddress()
@@ -334,8 +334,9 @@ void CCharacter::SetIsSpawned(bool spawned)
 
 bool CCharacter::IsValid()
 {
+	// FIXME: What is this trying to do?
 	try {
-		return (this && *(int*)(this->GetPointer())) == 0x64E928;
+		return this->GetPointer() == uintptr_t(0x64E928);
 	}
 	catch (std::exception ex) {
 		return false;

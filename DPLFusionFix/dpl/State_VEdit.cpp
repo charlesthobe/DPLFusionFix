@@ -60,7 +60,7 @@ void CState_VEdit::Step_GarageCamera()
 			// if input down or input up is not pressed within the dead-zone
 			if (inputback < camerainput_deadzone && inputforward < camerainput_deadzone)
 			{
-				static float cord_elevationStep = 0.1f * 0.014959967;
+				static float cord_elevationStep = 0.1f * 0.014959967f;
 
 				if (*m_DisplayElevate < -cord_elevationStep)
 					*m_DisplayElevate += cord_elevationStep;  // push camera up
@@ -69,17 +69,17 @@ void CState_VEdit::Step_GarageCamera()
 			}
 
 			if (inputleft > camerainput_deadzone) {
-				*m_DisplayRotate = *m_DisplayRotate + (inputleft * 0.014959967);
+				*m_DisplayRotate = *m_DisplayRotate + (inputleft * 0.014959967f);
 			}
 			else if (inputright > camerainput_deadzone) {
-				*m_DisplayRotate = *m_DisplayRotate - (inputright * 0.014959967);
+				*m_DisplayRotate = *m_DisplayRotate - (inputright * 0.014959967f);
 			}
 
 			if (inputback > camerainput_deadzone) {
-				*m_DisplayElevate = *m_DisplayElevate - (inputback * 0.014959967);
+				*m_DisplayElevate = *m_DisplayElevate - (inputback * 0.014959967f);
 			}
 			else if (inputforward > camerainput_deadzone) {
-				*m_DisplayElevate = *m_DisplayElevate + (inputforward * 0.014959967);
+				*m_DisplayElevate = *m_DisplayElevate + (inputforward * 0.014959967f);
 			}
 
 			// if rotation is greater than 360 degrees then reset the angle (no effect)
@@ -90,7 +90,7 @@ void CState_VEdit::Step_GarageCamera()
 			// if rotation is less than 0 then set the angle to 360 degrees (no effect)
 			if (*m_DisplayRotate < 0)
 			{
-				*m_DisplayRotate = M_PI * 2;
+				*m_DisplayRotate = static_cast<float>(M_PI * 2);
 			}
 
 			// clamp elevation (approx -5.6 degrees to +22.5 degrees in radians)

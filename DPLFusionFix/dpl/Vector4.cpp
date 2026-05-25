@@ -89,7 +89,7 @@ float GetDistanceBetweenPoints3D(Vector4 v1, Vector4 v2)
 	float x2 = v2.X;
 	float y2 = v2.Y;
 	float z2 = v2.Z;
-	float dist = pow((x2 - x1) * pow(x2 - x1, 2) + (y2 - y1) * pow(y2 - y1, 2) + (z2 - z1) * (z2 - z1), 0.5f);
+	float dist = static_cast<float>(((x2 - x1) * pow(x2 - x1, 2) + (y2 - y1) * pow(y2 - y1, 2) + (z2 - z1) * (z2 - z1), 0.5f));
 	if (dist < 0)
 		dist = 0;
 	return dist;

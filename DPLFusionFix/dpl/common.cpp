@@ -111,8 +111,8 @@ void OnGameStep()
 		if (SettingsMgr->bWindowed_Mode)
 		{
 			HWND hamsterWnd = GetHamsterHWND();
-			int width = GetSystemMetrics(SM_CXSCREEN);
-			int height = GetSystemMetrics(SM_CYSCREEN);
+			float width = static_cast<float>(GetSystemMetrics(SM_CXSCREEN));
+			float height = static_cast<float>(GetSystemMetrics(SM_CYSCREEN));
 
 			if (width != 0 && height != 0)
 			{

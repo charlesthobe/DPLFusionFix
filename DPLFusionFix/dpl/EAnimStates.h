@@ -14,7 +14,7 @@ enum EnumAnimCondition {
 	eACond_End = 6
 };
 
-typedef enum eAnimState {
+enum eAnimState {
 	eAState_Undef = -2,
 	eAState_Bad = -1,
 	eAState_Invalid = -1,

@@ -146,7 +146,7 @@ struct CMapMarkers {
 };
 
 struct SGameOverlayGraphic {
-	struct Vector4 vColour;
+	Vector4 vColour;
 	float fX;
 	float fY;
 	float fW;

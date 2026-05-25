@@ -4,8 +4,8 @@
 class CLevelList
 {
 public:
-	unsigned int m_uCurrentLevel;
-	unsigned int m_uLevels;
+	int m_uCurrentLevel;
+	int m_uLevels;
 	char* buffer;
 
 	char* GetLevelName(int nLevel);

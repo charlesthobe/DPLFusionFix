@@ -80,7 +80,8 @@ void CFontManager::PrintFast(Vector4* dimensions, CPCViewport* piView, FontSpecs
 
 void CFontManager::Print(Vector4* dimensions, AutoPtr<CPCViewport, int> piView, FontSpecs *spec, const wchar_t* szFormat, int unk1)
 {
-	Print(dimensions, piView, spec, (wchar_t*)szFormat, unk1);
+	//Print(dimensions, piView, spec, (wchar_t*)szFormat, unk1);
+	// FIXME: Broken function that infinitely calls itself
 }
 
 void CFontManager::Print(Vector4* dimensions, CPCViewport* piView, FontSpecs *spec, const wchar_t* szFormat, int unk1)

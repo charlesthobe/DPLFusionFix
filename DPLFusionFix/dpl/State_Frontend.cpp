@@ -1010,7 +1010,7 @@ void CState_Frontend::ProcessCommand_Development(char *szCommand, char *szParame
 		GetGameMenuLink()->SetValue(currentChar);
 	}
 
-	uint32_t num_options = 0;
+	int num_options = 0;
 	if (m_eDebugOptionsType == eDebugOptions_Game)
 	{
 		num_options = sizeof(m_pszGameDebugOptions) / 4;
@@ -1052,7 +1052,7 @@ void CState_Frontend::ProcessCommand_Development(char *szCommand, char *szParame
 	int option_idx = GetDebugOptionIndex(szCommand);
 	if (option_idx != -1)
 	{
-		uint32_t option_num = (m_debugOffset + option_idx);
+		int option_num = (m_debugOffset + option_idx);
 		char* optName = NULL;
 		SDebugOption* ogopt = NULL;
 
@@ -1101,7 +1101,7 @@ void CState_Frontend::ProcessCommand_Development(char *szCommand, char *szParame
 	// Make the debug options be changed
 	if (m_debugOption >= 0 && m_debugOption < total_num_options)
 	{
-		uint32_t option_num = (m_debugOption + m_debugOffset);
+		int option_num = (m_debugOption + m_debugOffset);
 		char* optName = NULL;
 		SDebugOption* ogopt = NULL;
 

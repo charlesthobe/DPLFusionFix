@@ -15,8 +15,8 @@ struct CLifeEventList {
 	uint8_t field7_0xd;
 	uint8_t field8_0xe;
 	uint8_t field9_0xf;
-	struct Matrix m_restartPosition;
-	struct Vector4 v4Position;
+	Matrix m_restartPosition;
+	Vector4 v4Position;
 	unsigned int eventType;
 	char *filename;
 	struct LocalisedString *m_eventName;

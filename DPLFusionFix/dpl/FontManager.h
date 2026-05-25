@@ -13,7 +13,7 @@ enum EJustify {
 };
 
 struct FontSpecs {
-	struct Vector4 colour { 1, 1, 1, 1 };
+	Vector4 colour { 1, 1, 1, 1 };
 	int fontType;
 	int textType;
 	float x;

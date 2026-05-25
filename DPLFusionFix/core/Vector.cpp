@@ -1,6 +1,6 @@
 #include "Vector.h"
 
-inline float RecipSqrt(float x, float y) { return x / sqrt(y); }
+inline float RecipSqrt(float x, float y) { return x / sqrtf(y); }
 inline float RecipSqrt(float x) { return RecipSqrt(1.0f, x); }
 
 void Vector::Normalise()
@@ -24,16 +24,16 @@ Vector CrossProduct(const Vector& v1, const Vector& v2)
 // Returns the Y axis (in radians) facing a specific vector
 float GetYAxisFromDirection(Vector direction)
 {
-	return atan2(direction.X, direction.Y);
+	return atan2f(direction.X, direction.Y);
 }
 
 // Returns a vector with X Y Z axis in radians indicating the direction 
 void GetAxisVectorFromDirection(Vector direction, Vector& vector)
 {
-	float x = atan2(direction.Y, GetDistanceBetweenPoints2D(0, 0, direction.X, direction.Z));
+	float x = atan2f(direction.Y, GetDistanceBetweenPoints2D(0, 0, direction.X, direction.Z));
 	while (x > M_PI*2)
 	{
-		x = x - M_PI*2;
+		x = static_cast<float>(x - M_PI*2);
 	}
 	vector.X = x;
 	vector.Y = GetYAxisFromDirection(direction);
@@ -42,7 +42,7 @@ void GetAxisVectorFromDirection(Vector direction, Vector& vector)
 
 float GetDistanceBetweenPoints2D(float x1, float y1, float x2, float y2)
 {
-	float dist = pow((x2 - x1) * pow(x2 - x1, 2) + (y2 - y1) * pow(y2 - y1, 2), 0.5f);
+	float dist = powf((x2 - x1) * powf(x2 - x1, 2) + (y2 - y1) * powf(y2 - y1, 2), 0.5);
 	if (dist < 0)
 		dist = 0;
 	return dist;
@@ -53,7 +53,7 @@ float GetDistanceBetweenPoints3D(float x1, float y1, float z1, float x2, float y
 	float dx = x2 - x1;
 	float dy = y2 - y1;
 	float dz = z2 - z1;
-	float dist = sqrt(dx * dx + dy * dy + dz * dz);
+	float dist = sqrtf(dx * dx + dy * dy + dz * dz);
 	if (dist < 0)
 		dist = 0;
 	return dist;

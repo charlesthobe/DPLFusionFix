@@ -10,7 +10,7 @@ struct sNameToEVehicleType
 extern int* _22VEHICLE_SELECTION_HACK$currentVehicle;
 extern int* _22VEHICLE_SELECTION_HACK$currentVehicleType;
 
-static class VEHICLE_SELECTION_HACK
+class VEHICLE_SELECTION_HACK
 {
 public:
 	static sNameToEVehicleType* GetVehicleTypeMatchTable();

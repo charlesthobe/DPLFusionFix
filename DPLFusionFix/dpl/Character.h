@@ -63,7 +63,7 @@ public:
 	void SetAnimType(int type);
 
 	int* GetAnimTypePointer();
-	int GetPointer();
+	uintptr_t GetPointer();
 	int GetVTableAddress();
 
 	void DrawCrosshair(int Viewport, int unk);

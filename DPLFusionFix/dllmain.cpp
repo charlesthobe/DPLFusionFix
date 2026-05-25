@@ -180,8 +180,8 @@ void OnInitializePlugin()
 	}
 	if (SettingsMgr->bMinimap_Driver3_Goons)
 	{
-		Patch<char>(0x4bdf71 + 3, 0x4C); // ambColour.Y = 0;
-		//Patch(0x4bdf92 + 7, {0x05, 0x00, 0x35, 0x00}); // instance.hModel = MinimapIcon_AlertedCop;
+		WriteAt(0x4bdf71 + 3, "\x4C", 1); // ambColour.Y = 0;
+		//WriteAt(0x4bdf92 + 7, "\x05\x00\x35", 4); // instance.hModel = MinimapIcon_AlertedCop;
 		
 		// Prevent the player icon into becoming one of them
 		Nop(0x4bdf47, 6);

@@ -35,7 +35,7 @@ void Update_Debug_InvincibleToWater()
 	if (bDebug_InvincibleToWater)
 	{
 		Nop(0x4A268D, 6);
-		InjectHook(0x4A268D, 0x4A27A5, PATCH_JUMP);
+		InjectHook(0x4A268D, 0x4A27A5, HookType::Jump);
 	}
 	else
 	{

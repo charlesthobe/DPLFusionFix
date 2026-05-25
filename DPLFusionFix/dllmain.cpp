@@ -169,12 +169,12 @@ void OnInitializePlugin()
 
 	if (SettingsMgr->bDev_Menu_On)
 	{
-		Patch<char>(0x459f8e + 1, 0x01); // pause_devMenuBTN->SetRenderState(1);
+		WriteAt(0x459f8e + 1, "\x01", 1); // pause_devMenuBTN->SetRenderState(1);
 		
 		// NOTE: for your safety you better not access frontend dev menu!
 		// it will crash the game, so stick to the pause menu dev menu :/
-		Patch<char>(0x4aa522 + 1, 0x01); // frontend_devMenuBTN->SetRenderState(1);
-
+		WriteAt(0x4aa522 + 1, "\x01", 1); // frontend_devMenuBTN->SetRenderState(1);
+	
 		//Nop(0x4aa3f2, 9); // disable launch_dev_menu
 		//Nop(0x459f8c, 14);
 	}
